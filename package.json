@@ -1,0 +1,21 @@
+{
+    "name": "mahjong-ai-assistant",
+    "version": "1.0.0",
+    "description": "AI assistant for Mahjong Soul",
+    "scripts": {
+      "clean": "rimraf dist",
+      "copy": "copyfiles -u 1 src/**/*.{html,json} dist",
+      "build:js": "node esbuild.js",
+      "build": "npm run clean && npm run copy && npm run build:js",
+      "watch": "npm run build -- --watch"
+    },
+    "devDependencies": {
+      "copyfiles": "^2.4.1",
+      "esbuild": "^0.14.54",
+      "rimraf": "^3.0.2",
+      "glob": "^8.0.3"
+    },
+    "dependencies": {
+      "html2canvas": "^1.4.1"
+    }
+  }
