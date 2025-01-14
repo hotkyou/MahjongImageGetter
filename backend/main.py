@@ -57,3 +57,5 @@ async def analyze_image(request: AnalyzeRequest):
         }
     except Exception as e:
         raise HTTPException(status_code=400, detail=f"画像の処理中にエラーが発生しました: {str(e)}")
+
+# uvicorn main:app --port 8000

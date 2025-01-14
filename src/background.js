@@ -18,8 +18,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
             return true;
         }
 
-        // 分析用APIにPOSTリクエストを送信
-        fetch("http://0.0.0.0:8000/analyze", {
+        fetch("http://127.0.0.1:8000/analyze", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -28,13 +27,19 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
                 image: lastCapturedImage
             })
         })
-        .then(response => response.json())
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return response.json();
+        })
         .then(data => {
+            console.log("分析成功:", data);
             sendResponse({ success: true, data: data });
         })
         .catch(error => {
-            console.error("Analysis error:", error);
-            sendResponse({ success: false, error: error.message });
+            console.error("分析エラー:", error);
+            sendResponse({ success: false, error: error.toString() });
         });
 
         return true;
