@@ -7,6 +7,8 @@ from PIL import Image
 import os
 from datetime import datetime
 
+import templatematch
+
 app = FastAPI()
 
 # CORSの設定
@@ -46,6 +48,8 @@ async def analyze_image(request: AnalyzeRequest):
         # 画像のサイズなどを取得（処理内容をカスタマイズ可能）
         width, height = image.size
         mode = image.mode
+        
+        templatematch.tmpMatch(f"{timestamp}.png")
 
         # 処理結果を返却
         return {

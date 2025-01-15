@@ -1,6 +1,7 @@
 node_modules/
 dist/
 uploaded_images/
+edit_images/
 .DS_Store
 *.log
 
