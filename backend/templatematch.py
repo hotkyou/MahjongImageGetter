@@ -63,14 +63,36 @@ def recogPaiImage(paiImage, paiListImagePath):
     
     # 座標を元に牌の種類を識別する
     paiList = (
-        ('m1','m2','m3','m4','m5','m6','m7','m8','m9'),
-        ('p1','p2','p3','p4','p5','p6','p7','p8','p9'),
-        ('s1','s2','s3','s4','s5','s6','s7','s8','s9'),
+        ('m1','m2','m3','m4','m5','m6','m7','m8','m9','m0'),
+        ('p1','p2','p3','p4','p5','p6','p7','p8','p9','p0'),
+        ('s1','s2','s3','s4','s5','s6','s7','s8','s9','s0'),
         ('z1','z2','z3','z4','z5','z6','z7')
     )
     listHeight, listWidth = paiListImage.shape[:2]
     paiKind = int((mode[0]+listHeight/8)/(listHeight/4))
     paiNum = int((mode[1]+listWidth/18)/(listWidth/9))
+    if paiNum == 4 and count_red_pixel(paiImage)>2000:
+        paiNum = 9
     return paiList[paiKind][paiNum]
 
-tmpMatch("20250115_162826.png")
+# 赤色画素の個数をカウントする
+def count_red_pixel(img):
+    # HSV色空間に変換
+    hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
+
+    # 赤色のHSVの値域1
+    hsv_min = np.array([0,64,0])
+    hsv_max = np.array([30,255,255])
+    mask1 = cv2.inRange(hsv, hsv_min, hsv_max)
+
+    # 赤色のHSVの値域2
+    hsv_min = np.array([150,64,0])
+    hsv_max = np.array([179,255,255])
+    mask2 = cv2.inRange(hsv, hsv_min, hsv_max)
+
+    # 赤色領域のマスク（255：赤色、0：赤色以外）    
+    mask = mask1 + mask2
+
+    return np.count_nonzero(mask == 255)
+
+#tmpMatch("20250115_162826.png")
