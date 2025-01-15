@@ -52,7 +52,7 @@ def recogPaiImage(paiImage, paiListImagePath):
     res = cv2.matchTemplate(paiListImage_gray, paiImage_gray, cv2.TM_CCOEFF_NORMED)
 
     # 類似度の高い部分を検出する
-    threshold = 0.7
+    threshold = 0.8
     loc_candidate = np.where(res >= threshold)
 
     # マッチング座標の中で最頻値座標を求める
