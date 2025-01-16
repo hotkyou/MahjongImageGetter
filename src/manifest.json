@@ -1,28 +1,33 @@
 {
     "manifest_version": 3,
-    "name": "麻雀AI助手",
+    "name": "Mahjong AI Assistant",
     "version": "1.0",
-    "description": "雀魂の手牌を分析し、AIによる打牌提案を提供します。",
+    "description": "AI-powered assistant for Mahjong game analysis",
     "permissions": [
-        "activeTab",
-        "scripting",
-        "storage",
-        "tabs"
+      "activeTab",
+      "storage"
     ],
     "host_permissions": [
-        "<all_urls>",
-        "*://*.tenhou.net/*",
-        "*://game.mahjongsoul.com/*",
-        "http://0.0.0.0:8000/*"
+      "*://*.tenhou.net/*",
+      "*://game.mahjongsoul.com/*"
     ],
     "background": {
-        "service_worker": "background.js"
+      "service_worker": "background.js"
     },
     "content_scripts": [
-        {
-            "matches": ["*://*.tenhou.net/*", "*://game.mahjongsoul.com/*"],
-            "js": ["content.js"],
-            "run_at": "document_idle"
-        }
+      {
+        "matches": [
+          "*://*.tenhou.net/*",
+          "*://game.mahjongsoul.com/*"
+        ],
+        "js": ["content.js"],
+        "css": ["styles.css"]
+      }
+    ],
+    "web_accessible_resources": [
+      {
+        "resources": ["index.html"],
+        "matches": ["<all_urls>"]
+      }
     ]
-}
+  }
