@@ -155,62 +155,41 @@ class MahjongAIAssistant {
     updateAnalysisDisplay() {
         if (!this.analysis) return;
 
-        // モックデータを使用（実際のAPIレスポンスに合わせて調整）
-        const mockAnalysis = {
-            handAnalysis: {
-                recognizedTiles: ['1m', '2m', '3m', '4m', '5m', '6m', '7m', '8m', '9m'],
-                shanten: 1,
-                efficiency: 85,
-                yaku: ['pinfu', 'tanyao']
-            },
-            aiSuggestion: {
-                discardTile: '1m',
-                reason: '外側の牌を切ることで、より効率的な待ちを作れます',
-                winningProbability: 65
-            },
-            waitingTiles: ['2m', '5m', '8m'],
-            dangerAnalysis: {
-                dangerLevel: 'medium',
-                dangerousTiles: ['1p', '9p'],
-                safeTiles: ['1s', '9s']
-            }
-        };
-
         const analysisHTML = `
             <div class="space-y-4 p-4">
                 <div class="grid grid-cols-2 gap-4">
                     <div class="bg-white bg-opacity-90 rounded-lg p-4 shadow">
                         <h3 class="font-bold text-lg text-gray-800 mb-2">手牌分析</h3>
                         <div class="space-y-2">
-                            <p class="text-gray-700">認識された牌: ${mockAnalysis.handAnalysis.recognizedTiles.join(', ')}</p>
-                            <p class="text-gray-700">シャンテン数: ${mockAnalysis.handAnalysis.shanten}</p>
-                            <p class="text-gray-700">効率: ${mockAnalysis.handAnalysis.efficiency}%</p>
-                            <p class="text-gray-700">可能な役: ${mockAnalysis.handAnalysis.yaku.join(', ')}</p>
+                            <p class="text-gray-700">認識された牌: ${this.analysis.handAnalysis.recognizedTiles.join(', ')}</p>
+                            <p class="text-gray-700">シャンテン数: ${this.analysis.handAnalysis.shanten}</p>
+                            <p class="text-gray-700">効率: ${this.analysis.handAnalysis.efficiency}%</p>
+                            <p class="text-gray-700">可能な役: ${this.analysis.handAnalysis.yaku.join(', ')}</p>
                         </div>
                     </div>
 
                     <div class="bg-white bg-opacity-90 rounded-lg p-4 shadow">
                         <h3 class="font-bold text-lg text-gray-800 mb-2">AI提案</h3>
                         <div class="space-y-2">
-                            <p class="text-gray-700">切る牌: <span class="font-bold">${mockAnalysis.aiSuggestion.discardTile}</span></p>
-                            <p class="text-gray-700">${mockAnalysis.aiSuggestion.reason}</p>
-                            <p class="text-gray-700">和了確率: ${mockAnalysis.aiSuggestion.winningProbability}%</p>
+                            <p class="text-gray-700">切る牌: <span class="font-bold">${this.analysis.aiSuggestion.discardTile}</span></p>
+                            <p class="text-gray-700">${this.analysis.system.message}</p>
+                            <p class="text-gray-700">和了確率: ${this.analysis.aiSuggestion.winningProbability}%</p>
                         </div>
                     </div>
 
                     <div class="bg-white bg-opacity-90 rounded-lg p-4 shadow">
                         <h3 class="font-bold text-lg text-gray-800 mb-2">待ち牌</h3>
                         <div class="space-y-2">
-                            <p class="text-gray-700">${mockAnalysis.waitingTiles.join(', ')}</p>
+                            <p class="text-gray-700">${this.analysis.waitingTiles.join(', ')}</p>
                         </div>
                     </div>
 
                     <div class="bg-white bg-opacity-90 rounded-lg p-4 shadow">
                         <h3 class="font-bold text-lg text-gray-800 mb-2">危険度分析</h3>
                         <div class="space-y-2">
-                            <p class="text-gray-700">危険度: ${mockAnalysis.dangerAnalysis.dangerLevel}</p>
-                            <p class="text-gray-700">危険な牌: ${mockAnalysis.dangerAnalysis.dangerousTiles.join(', ')}</p>
-                            <p class="text-gray-700">安全な牌: ${mockAnalysis.dangerAnalysis.safeTiles.join(', ')}</p>
+                            <p class="text-gray-700">危険度: ${this.analysis.dangerAnalysis.dangerLevel}</p>
+                            <p class="text-gray-700">危険な牌: ${this.analysis.dangerAnalysis.dangerousTiles.join(', ')}</p>
+                            <p class="text-gray-700">安全な牌: ${this.analysis.dangerAnalysis.safeTiles.join(', ')}</p>
                         </div>
                     </div>
                 </div>

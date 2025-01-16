@@ -49,15 +49,33 @@ async def analyze_image(request: AnalyzeRequest):
         width, height = image.size
         mode = image.mode
         
-        templatematch.tmpMatch(f"{timestamp}.png")
+        paiList = templatematch.tmpMatch(f"{timestamp}.png")
 
         # 処理結果を返却
         return {
-            "message": "画像の処理と保存に成功しました",
-            "file_path": file_path,  # 保存先を返却
-            "width": width,
-            "height": height,
-            "mode": mode
+            "system": {
+                "message": "画像の処理と保存に成功しました",
+                "file_path": file_path,  # 保存先を返却
+                "width": width,
+                "height": height,
+                "mode": mode
+            },
+            "handAnalysis": {
+                "recognizedTiles": paiList,
+                "shanten": 1,
+                "yaku": ['pinfu', 'tanyao']
+            },
+            "aiSuggestion": {
+                "discardTile": '1m',
+                "reason": '外側の牌を切ることで、より効率的な待ちを作れます',
+                "winningProbability": 65
+            },
+            "waitingTiles": ['2m', '5m', '8m'],
+            "dangerAnalysis": {
+                "dangerLevel": 'medium',
+                "dangerousTiles": ['1p', '9p'],
+                "safeTiles": ['1s', '9s']
+            }
         }
     except Exception as e:
         raise HTTPException(status_code=400, detail=f"画像の処理中にエラーが発生しました: {str(e)}")
