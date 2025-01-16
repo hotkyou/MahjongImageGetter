@@ -7,7 +7,7 @@ from PIL import Image
 import os
 from datetime import datetime
 
-import templatematch
+import templatematch, shanten, predictAI
 
 app = FastAPI()
 
@@ -49,7 +49,9 @@ async def analyze_image(request: AnalyzeRequest):
         width, height = image.size
         mode = image.mode
         
-        paiList = templatematch.tmpMatch(f"{timestamp}.png")
+        paiList = templatematch.tmpMatch(f"{timestamp}.png") # 手牌のリスト
+        shantenNum = shanten.shaten(paiList) # シャンテン数
+        discardTile, prob = predictAI.predict(paiList)
 
         # 処理結果を返却
         return {
@@ -62,13 +64,13 @@ async def analyze_image(request: AnalyzeRequest):
             },
             "handAnalysis": {
                 "recognizedTiles": paiList,
-                "shanten": 1,
+                "shanten": shantenNum,
                 "yaku": ['pinfu', 'tanyao']
             },
             "aiSuggestion": {
-                "discardTile": '1m',
+                "discardTile": discardTile,
                 "reason": '外側の牌を切ることで、より効率的な待ちを作れます',
-                "winningProbability": 65
+                "winningProbability": prob
             },
             "waitingTiles": ['2m', '5m', '8m'],
             "dangerAnalysis": {
