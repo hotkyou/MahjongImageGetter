@@ -3,22 +3,18 @@
     "name": "Mahjong AI Assistant",
     "version": "1.0",
     "description": "AI-powered assistant for Mahjong game analysis",
-    "permissions": ["activeTab", "storage"],
-    "host_permissions": ["*://*.tenhou.net/*", "*://game.mahjongsoul.com/*"],
+    "permissions": ["activeTab", "storage", "scripting"],
+    "host_permissions": ["*://*.tenhou.net/*", "*://game.mahjongsoul.com/*", "*://game.maj-soul.com/*"],
     "background": {
         "service_worker": "background.js"
     },
     "content_scripts": [
         {
-            "matches": ["*://*.tenhou.net/*", "*://game.mahjongsoul.com/*"],
+            "matches": ["*://*.tenhou.net/*", "*://game.mahjongsoul.com/*", "*://game.maj-soul.com/*"],
             "js": ["content.js"],
-            "css": ["styles.css"]
+            "css": ["styles.css"],
+            "run_at": "document_end"
         }
     ],
-    "web_accessible_resources": [
-        {
-            "resources": ["index.html"],
-            "matches": ["<all_urls>"]
-        }
-    ]
+    "web_accessible_resources": []
 }
