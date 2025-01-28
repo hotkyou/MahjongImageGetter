@@ -11,6 +11,7 @@ def tmpMatch(image):
         paiList.append(recogPaiImage(myHandImageList[i], './template_images/paiList.png'))
     paiList.append(recogPaiImage(myTsumoImage, './template_images/paiList.png'))
     print(paiList)
+    return paiList
 
 def cropMyHandImage(img):
     height, width = img.shape[:2]

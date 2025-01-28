@@ -10,6 +10,11 @@ esbuild
         bundle: true,
         minify: true,
         format: "esm",
-        target: ["chrome58", "firefox57", "safari11", "edge16"]
+        target: "es2015",
+        loader: { '.js': 'jsx' },
+        jsx: 'automatic',
+        define: {
+            'process.env.NODE_ENV': '"production"'
+        }
     })
     .catch(() => process.exit(1));
